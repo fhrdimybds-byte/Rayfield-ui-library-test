@@ -65,8 +65,8 @@ end
 
 local requestsDisabled = true --getgenv and getgenv().DISABLE_RAYFIELD_REQUESTS
 local InterfaceBuild = '3K3W'
-local Release = "Build 1.68"
-local RayfieldFolder = "Rayfield"
+local Release = "Build 2.0"
+local RayfieldFolder = "Sarturn hub"
 local ConfigurationFolder = RayfieldFolder.."/Configurations"
 local ConfigurationExtension = ".rfld"
 local settingsTable = {
@@ -765,7 +765,7 @@ local dragInteract = dragBar and dragBar.Interact or nil
 local dragBarCosmetic = dragBar and dragBar.Drag or nil
 
 local dragOffset = 255
-local dragOffsetMobile = 150
+local dragOffsetMobile = 255
 
 Rayfield.DisplayOrder = 100
 LoadingFrame.Version.Text = Release
@@ -2163,23 +2163,15 @@ function RayfieldLibrary:CreateWindow(Settings)
 				end
 			end)
 
-			-- Efeito de Brilho ao passar o mouse
-Button.MouseEnter:Connect(function()
-    TweenService:Create(Button, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-        BackgroundColor3 = SelectedTheme.ElementBackgroundHover, -- Usa a cor de hover do seu tema
-        Size = UDim2.new(1, -5, 0, 39) -- Dá um leve efeito de "crescer" (opcional)
-    }):Play()
-    TweenService:Create(Button.UIStroke, TweenInfo.new(0.3), {Color = SelectedTheme.ToggleEnabled}):Play() -- Brilho na borda
-end)
+			Button.MouseEnter:Connect(function()
+				TweenService:Create(Button, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {BackgroundColor3 = SelectedTheme.ElementBackgroundHover}):Play()
+				TweenService:Create(Button.ElementIndicator, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {TextTransparency = 0.7}):Play()
+			end)
 
-Button.MouseLeave:Connect(function()
-    TweenService:Create(Button, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-        BackgroundColor3 = SelectedTheme.ElementBackground,
-        Size = UDim2.new(1, 0, 0, 38)
-    }):Play()
-    TweenService:Create(Button.UIStroke, TweenInfo.new(0.3), {Color = SelectedTheme.ElementStroke}):Play()
-end)
-
+			Button.MouseLeave:Connect(function()
+				TweenService:Create(Button, TweenInfo.new(0.8, Enum.EasingStyle.Exponential), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
+				TweenService:Create(Button.ElementIndicator, TweenInfo.new(0.7, Enum.EasingStyle.Exponential), {TextTransparency = 0.8}):Play()
+			end)
 
 			function ButtonValue:Set(NewButton)
 				Button.Title.Text = NewButton
