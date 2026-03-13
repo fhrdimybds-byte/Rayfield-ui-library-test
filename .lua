@@ -2131,38 +2131,37 @@ function RayfieldLibrary:CreateWindow(Settings)
 			TweenService:Create(Button.Title, TweenInfo.new(0.7, Enum.EasingStyle.Exponential), {TextTransparency = 0}):Play()	
 
 
-			Button.MouseButton1Click:Connect(function()
-    -- Lógica do Ripple
-    local Circle = Instance.new("ImageLabel")
-    Circle.Name = "Ripple"
-    Circle.Parent = Button
-    Circle.BackgroundTransparency = 1
-    Circle.ZIndex = 10
-    Circle.Image = "rbxassetid://266543268" -- ID da imagem de círculo
-    Circle.ImageColor3 = Color3.fromRGB(255, 255, 255)
-    Circle.ImageTransparency = 0.8
-    
-    local NewX, NewY = Mouse.X - Circle.AbsolutePosition.X, Mouse.Y - Circle.AbsolutePosition.Y
-    Circle.Position = UDim2.new(0, NewX, 0, NewY)
-    
-    local Size = 0
-    if Button.AbsoluteSize.X > Button.AbsoluteSize.Y then
-        Size = Button.AbsoluteSize.X * 1.5
-    else
-        Size = Button.AbsoluteSize.Y * 1.5
-    end
-    
-    Circle:TweenSizeAndPosition(UDim2.new(0, Size, 0, Size), UDim2.new(0.5, -Size/2, 0.5, -Size/2), "Out", "Quad", 0.5, false)
-    TweenService:Create(Circle, TweenInfo.new(0.5), {ImageTransparency = 1}):Play()
-    
-    task.delay(0.5, function()
-        Circle:Destroy()
-    end)
-
-    -- Callback original do botão
-    Callback()
-end)
-
+			Button.Interact.MouseButton1Click:Connect(function()
+				local Success, Response = pcall(ButtonSettings.Callback)
+				-- Prevents animation from trying to play if the button's callback called RayfieldLibrary:Destroy()
+				if rayfieldDestroyed then
+					return
+				end
+				if not Success then
+					TweenService:Create(Button, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {BackgroundColor3 = Color3.fromRGB(85, 0, 0)}):Play()
+					TweenService:Create(Button.ElementIndicator, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {TextTransparency = 1}):Play()
+					TweenService:Create(Button.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {Transparency = 1}):Play()
+					Button.Title.Text = "Callback Error"
+					print("Rayfield | "..ButtonSettings.Name.." Callback Error " ..tostring(Response))
+					warn('Check docs.sirius.menu for help with Rayfield specific development.')
+					task.wait(0.5)
+					Button.Title.Text = ButtonSettings.Name
+					TweenService:Create(Button, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
+					TweenService:Create(Button.ElementIndicator, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {TextTransparency = 0.9}):Play()
+					TweenService:Create(Button.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {Transparency = 0}):Play()
+				else
+					if not ButtonSettings.Ext then
+						SaveConfiguration(ButtonSettings.Name..'\n')
+					end
+					TweenService:Create(Button, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {BackgroundColor3 = SelectedTheme.ElementBackgroundHover}):Play()
+					TweenService:Create(Button.ElementIndicator, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {TextTransparency = 1}):Play()
+					TweenService:Create(Button.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {Transparency = 1}):Play()
+					task.wait(0.2)
+					TweenService:Create(Button, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
+					TweenService:Create(Button.ElementIndicator, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {TextTransparency = 0.9}):Play()
+					TweenService:Create(Button.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {Transparency = 0}):Play()
+				end
+			end)
 
 			-- Efeito de Brilho ao passar o mouse
 Button.MouseEnter:Connect(function()
