@@ -1208,7 +1208,15 @@ end
 
 local function Hide(notify: boolean?)
 	if MPrompt then
-		MPrompt.Title.TextColor3 = SelectedTheme.ToggleEnabled
+	MPrompt:FindFirstChild("GlowStroke") 
+            local Glow = Instance.new("UIStroke")
+            Glow.Name = "GlowStroke"
+            Glow.Parent = MPrompt
+            Glow.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+            Glow.Thickness = 2
+            Glow.Transparency = 1
+            Glow.Color = SelectedTheme.ToggleEnabled -- Cor Ciano/Roxo do Saturn
+		MPrompt.Title.TextColor3 = Color3.fromRGB(255, 255, 255)
 		MPrompt.Position = UDim2.new(0.5, 0, 0, -50)
 		MPrompt.Size = UDim2.new(0, 40, 0, 10)
 		MPrompt.BackgroundTransparency = 1
