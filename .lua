@@ -797,6 +797,14 @@ local function ChangeTheme(Theme)
 	elseif typeof(Theme) == 'table' then
 		SelectedTheme = Theme
 	end
+	
+local MainGlow = Instance.new("UIStroke")
+MainGlow.Name = "SaturnGlow"
+MainGlow.Parent = Main
+MainGlow.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+MainGlow.Thickness = 2
+MainGlow.Color = SelectedTheme.ToggleEnabled -- O Ciano/Roxo do Saturn
+MainGlow.Transparency = 0.5 -- Brilho suave
 
 	Rayfield.Main.BackgroundColor3 = SelectedTheme.Background
 	Rayfield.Main.Topbar.BackgroundColor3 = SelectedTheme.Topbar
