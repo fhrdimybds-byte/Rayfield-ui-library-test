@@ -1,15 +1,3 @@
---[[
-
-	Rayfield Interface Suite
-	by Sirius
-
-	shlex  | Designing + Programming
-	iRay   | Programming
-	Max    | Programming
-	Damian | Programming
-
-]]
-
 if debugX then
 	warn('Initialising Rayfield')
 end
@@ -452,7 +440,7 @@ local RayfieldLibrary = {
     SliderStroke = Color3.fromRGB(170, 110, 255),
 
     ToggleBackground = Color3.fromRGB(30, 20, 45),
-    ToggleEnabled = Color3.fromRGB(140, 80, 220), 
+    ToggleEnabled = Color3.fromRGB(0, 200, 255), 
     ToggleDisabled = Color3.fromRGB(50, 45, 60),
     ToggleEnabledStroke = Color3.fromRGB(180, 120, 255),
     ToggleDisabledStroke = Color3.fromRGB(70, 65, 85),
@@ -797,12 +785,11 @@ local function ChangeTheme(Theme)
 	elseif typeof(Theme) == 'table' then
 		SelectedTheme = Theme
 	end
-	
 local MainGlow = Instance.new("UIStroke")
 MainGlow.Name = "SaturnGlow"
 MainGlow.Parent = Main
 MainGlow.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-MainGlow.Thickness = 2
+MainGlow.Thickness = 1
 MainGlow.Color = SelectedTheme.ToggleEnabled -- O Ciano/Roxo do Saturn
 MainGlow.Transparency = 0.5 -- Brilho suave
 
